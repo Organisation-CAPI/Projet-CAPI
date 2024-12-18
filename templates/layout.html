@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_salle.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation, contenu global -->
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc;">
+        <a href="{{ url_for('login') }}" style="font-size: 24px; font-weight: bold; text-decoration: none; color: black; margin-right: 20px;">
+            Planning Poker
+        </a>
+        <h1 style="margin: 0; font-size: 24px; text-align: center; flex: 1;">Web Application Planning Agile</h1>
+    </header>
+
+    <!-- barre de navigation  -->
+    <nav>
+        <!-- <div class="container justify-content-center">  -->
+
+        
+
+        <ul>
+            <li>
+                <a href="{{ url_for('login') }}">login</a>
+            </li>
+            
+            <li>
+                <a href="{{ url_for('salle_de_vote') }}">Salle de vote</a>
+            </li>
+            <li>
+                <a href="{{ url_for('backlog') }}">Backlog des fonctionnalités</a>
+            </li>
+            <li>
+                <a href="{{ url_for('acces_sm') }}">Accès SM</a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}">logout</a>
+            </li>
+
+        </ul>
+
+
+    </nav>
+
+    
+
+    <!-- Contenu spécifique de chaque page -->
+    <div class="contenu_global">
+        {% block content %}          
+        {% endblock %}
+    </div>
+
+    <!-- Messages Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+</body>
+
+</html>

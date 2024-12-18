@@ -1,0 +1,71 @@
+{
+    "backlog": [
+        {
+            "id": 6,
+            "nom": "ma fonctionnalit\u00e9",
+            "description": "kjkjkjkj",
+            "priorite": "5",
+            "difficulte": "5",
+            "statut": "A faire",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "tyu",
+                "sfdf",
+                "sdsd",
+                "sfdf"
+            ]
+        },
+        {
+            "id": 9,
+            "nom": "sd css",
+            "description": "ffd",
+            "priorite": "5",
+            "difficulte": "66",
+            "statut": "Termin\u00e9",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "aze",
+                "sfdf"
+            ]
+        },
+       
+        {
+            "id": 8,
+            "nom": "ma fonctionnalit\u00e9 100 product_backlog",
+            "description": "sdscvc xvxv",
+            "priorite": 6,
+            "difficulte": 20,
+            "statut": "A faire",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "aze",
+                "tyu"
+            ]
+        },
+        {
+            "id": 11,
+            "nom": "123456789",
+            "description": "fdgf hjhj",
+            "priorite": "9",
+            "difficulte": "4",
+            "statut": "A faire",
+            "mode_de_vote": "strict",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 12,
+            "nom": "test1",
+            "description": "test1",
+            "priorite": "9",
+            "difficulte": "1",
+            "statut": "A faire",
+            "mode_de_vote": "strict",
+            "participants": [
+                "hugo"
+            ]
+        }
+    ]
+}

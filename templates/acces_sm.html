@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Accès Scrum Master</h1>
+
+{% if pseudo_actif == "sm" %}
+<p>Bonjour {{ pseudo }}, vous êtes connecté en tant que Scrum Master.</p>
+
+<!-- Section : Initiation du vote -->
+<section>
+    <h2>Initier le vote</h2>
+    {% if fonctionnalite %}
+
+        <h3>Participants attendus :</h3>
+        <ul>
+            {% for participant in participants_attendus %}
+            <li>{{ participant }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Participants connectés :</h3>
+        <ul>
+            {% for participant in participants_connectes %}
+            <li>{{ participant }}</li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Fonctionnalité prioritaire :</strong></p>
+        <ul>
+            <li><strong>Nom :</strong> {{ fonctionnalite.nom }}</li>
+            <li><strong>Description :</strong> {{ fonctionnalite.description }}</li>
+            <li><strong>Mode de vote :</strong> {{ fonctionnalite.mode_de_vote }}</li>
+        </ul>
+        {% if difference %}
+        <p style="color: red;">Participants manquants : {{ difference|join(', ') }}</p>
+        {% else %}
+        <p style="color: green;">Tous les participants attendus sont connectés.</p>
+        {% endif %}
+
+        <form action="{{ url_for('initier_vote') }}" method="POST">
+            <button type="submit" {% if not bouton_actif %}disabled{% endif %}>
+                Initier le vote
+            </button>
+        </form>
+        {% if not bouton_actif %}
+        <p style="color: orange;">Le vote ne peut pas être démarré tant que tous les participants attendus ne sont pas
+            connectés.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Aucune fonctionnalité prioritaire n'est disponible dans le backlog.</p>
+    {% endif %}
+
+</section>
+
+<hr>
+
+<!-- Section : Gestion des votes -->
+<section>
+    {% if tout_le_monde_a_vote %}
+    <h2>Actions après le vote</h2>
+    <form action="{{ url_for('reveler_votes') }}" method="POST">
+        <button type="submit" class="btn btn-success">Révéler les votes</button>
+    </form>
+
+    {% if votes_reveles %}
+        <h3>Résultat des votes</h3>
+        <p><em>Note :</em> Le Product Owner (PO) et le Scrum Master (SM) ne participent pas au vote.</p>
+        <ul>
+            {% for pseudo, vote in votes.items() %}
+                <li><span style="color: green;"><strong>{{ pseudo }} : {{ vote }}</strong></span></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="{{ url_for('faciliter_discussion') }}" method="POST">
+        <button type="submit" class="btn btn-warning">Faciliter la discussion</button>
+    </form>
+    <form action="{{ url_for('valider_vote') }}" method="POST">
+        <button type="submit" class="btn btn-info">Valider le vote</button>
+    </form>
+    {% else %}
+    <p style="color: red;">Tous les participants n'ont pas encore voté.</p>
+    {% endif %}
+
+    <form action="{{ url_for('reinitialiser_vote') }}" method="POST">
+        <button type="submit" class="btn btn-danger">Réinitialiser les votes</button>
+    </form>
+</section>
+{% else %}
+<section>
+    <p>Cette page est réservée au Scrum Master.</p>
+</section>
+{% endif %}
+
+{% endblock %}

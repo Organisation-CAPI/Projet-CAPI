@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Modifier la fonctionnalité</h2>
+
+<form method="POST">
+
+    <!-- Champ pour le nom de la fonctionnalité-->
+    <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="nom" name="nom" value="{{ fonctionnalite.nom }}" required>
+    </div>
+
+    <!-- Champ pour la description de la fonctionnalité-->
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description"
+            required>{{ fonctionnalite.description }}</textarea>
+    </div>
+
+    <!-- Champ pour définir la priorité de la fonctionnalité-->
+    <div class="form-group">
+        <label for="priorite">Priorité</label>
+        <input type="number" class="form-control" id="priorite" name="priorite" value="{{ fonctionnalite.priorite }}"
+            required>
+    </div>
+
+    <!-- Champ pour définir la difficulté la fonctionnalité-->
+    <div class="form-group">
+        <label for="difficulte">Difficulté</label>
+        <input type="text" class="form-control" id="difficulte" name="difficulte"
+            value="{{ fonctionnalite.difficulte }}">
+    </div>
+
+    <!-- Champ pour modifier le mode de vote -->
+    <div class="form-group">
+        <label for="mode_de_vote">Mode de vote :</label>
+        <select id="mode_de_vote" name="mode_de_vote" class="form-control" required>
+            <option value="strict" {% if fonctionnalite.mode_vote=="strict" %}selected{% endif %}>Mode Strict
+                (Unanimité)</option>
+            <option value="moyenne" {% if fonctionnalite.mode_vote=="moyenne" %}selected{% endif %}>Moyenne</option>
+            <option value="mediane" {% if fonctionnalite.mode_vote=="mediane" %}selected{% endif %}>Médiane</option>
+            <option value="majorite_absolue" {% if fonctionnalite.mode_vote=="majorite_absolue" %}selected{% endif %}>
+                Majorité Absolue</option>
+            <option value="majorite_relative" {% if fonctionnalite.mode_vote=="majorite_relative" %}selected{% endif %}>
+                Majorité Relative</option>
+        </select>
+    </div>
+
+    <!-- champ pour le statut-->
+    <div class="form-group">
+        <label for="statut">Statut</label>
+        <select class="form-control" id="statut" name="statut">
+            <option value="A faire" {% if fonctionnalite.statut=='A faire' %}selected{% endif %}>A faire</option>
+            <option value="En cours" {% if fonctionnalite.statut=='En cours' %}selected{% endif %}>En cours</option>
+            <option value="Terminé" {% if fonctionnalite.statut=='Terminé' %}selected{% endif %}>Terminé</option>
+        </select>
+    </div>
+
+    <!-- Ajout de participants -->
+    <div class="form-group">
+        <label for="participants">Participants</label>
+        <div id="participants-container">
+            <!-- Liste des participants existants -->
+            {% for participant in fonctionnalite.participants %}
+            <div class="participant-item">
+                <input type="hidden" name="participants[]" value="{{ participant }}">
+                {{ participant }}
+                <button type="button" class="btn btn-danger btn-sm remove-participant">Supprimer</button>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <input type="text" id="new-participant" class="form-control mt-2" placeholder="Ajouter un participant">
+            <button type="button" id="add-participant" class="btn btn-primary mt-2">Ajouter</button>
+        </div>
+    </div>
+    
+
+    <!-- boutons -->
+    <div class="text-center ">
+    <button type="submit" class="btn btn-primary mt-2">Enregistrer</button>
+</div>
+</form>
+<div class="text-center" style="margin-top: 20px;">
+<a href="{{ url_for('backlog') }}" class="btn btn-primary">Retour</a>
+</div>
+
+
+<!-- JavaScript pour gérer les participants -->
+<script>
+    document.getElementById('add-participant').addEventListener('click', function () {
+        const input = document.getElementById('new-participant');
+        const value = input.value.trim();
+
+        if (value) {
+            const container = document.getElementById('participants-container');
+
+            // Créer un élément pour le participant
+            const participantDiv = document.createElement('div');
+            participantDiv.classList.add('participant-item');
+            participantDiv.innerHTML = `
+                <input type="hidden" name="participants[]" value="${value}">
+                ${value}
+                <button type="button" class="btn btn-danger btn-sm remove-participant">Supprimer</button>
+            `;
+
+            // Ajouter l'élément dans la liste
+            container.appendChild(participantDiv);
+
+            // Réinitialiser le champ d'entrée
+            input.value = '';
+
+            // Ajouter un gestionnaire pour le bouton "Supprimer"
+            participantDiv.querySelector('.remove-participant').addEventListener('click', function () {
+                participantDiv.remove();
+            });
+        }
+    });
+
+    // Ajouter un gestionnaire pour les boutons "Supprimer" existants
+    document.querySelectorAll('.remove-participant').forEach(function (button) {
+        button.addEventListener('click', function () {
+            button.parentElement.remove();
+        });
+    });
+</script>
+{% endblock %}

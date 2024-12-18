@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Backlog des fonctionnalités</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="alert-container">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Priorité</th>            
+            <th>Difficulté</th>
+            <th>Statut</th>
+            <th>Mode de vote</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fonctionnalite in backlog %}
+
+        <tr>
+            <td>{{ fonctionnalite.nom }}</td>
+            <td>{{ fonctionnalite.description }}</td>
+            <td>{{ fonctionnalite.priorite }}</td>
+            <td>{{ fonctionnalite.difficulte }}</td>
+            <td>{{ fonctionnalite.statut }}</td>
+            <td>{{ fonctionnalite.mode_de_vote }}</td>
+            <td>{% for participant in fonctionnalite.participants %}
+                {{ participant }}
+                {% endfor %}</td>
+
+
+            {% if pseudo_actif == 'po' %}
+            <td>
+                <a href="{{ url_for('edit_fonctionnalite_route', fonctionnalite_id=fonctionnalite.id) }}"
+                    class="btn btn-warning btn-sm">Modifier</a>
+                <a href="{{ url_for('supprimer_fonctionnalite_route', fonctionnalite_id=fonctionnalite.id) }}"
+                    class="btn btn-danger btn-sm">Supprimer</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <!-- Utilisez colspan pour fusionner les colonnes -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <!--<td colspan="4" class="text-end">
+                
+            </td>-->
+        </tr>
+
+    </tfoot>
+
+</table>
+<a href="{{ url_for('salle_de_vote') }}" class="btn btn-primary">Retour</a>
+{% endblock %}

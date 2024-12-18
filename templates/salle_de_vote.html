@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="vote-container">
+
+
+    <!-- Partie gauche : Votes -->
+    <div class="vote-gauche">
+
+        <section>
+            <!-- Participants -->
+            <h2>Salle de vote</h2>
+            <div class="participant-grille">
+                <h3>Participants connectés</h3>
+                {% for participant in participants %}
+                {% if participant.pseudo not in ["PO","SM", "sm", "po"] %}
+
+                <!--le participant clique sur son avatar-->
+                <form action="{{ url_for('set_pseudo_actif') }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="pseudo" value="{{ participant.pseudo }}">
+                    <button type="submit" class="avatar-button"  {% if pseudo_actif==participant.pseudo
+                        %}style="border: 2px solid green;" {% endif %}>
+                        <img src="{{ participant.avatar }}" alt="Avatar de {{ participant.pseudo }}">
+                        <p>{{ participant.pseudo }}</p>
+                    </button>
+                </form>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- Jeu de cartes de vote -->
+            {% if vote_commence %}
+                <div style="margin-bottom:30px; margin-top:30px;">
+                    <h3>Votez pour la fonctionnalité prioritaire :</h3>
+                    {% if pseudo_actif %}
+                        <p><strong>Participant actif :</strong> {{ pseudo_actif }}</p>
+                        {% for carte in cartes %}
+                            <form action="{{ url_for('soumettre_vote') }}" method="POST" style="display: inline;">
+                                <input type="hidden" name="vote" value="{{ carte }}">
+                                <input type="hidden" name="pseudo" value="{{ pseudo_actif }}">
+                                <button type="submit" class="carte-vote">
+                                    {{ carte }}
+                                </button>
+                            </form>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: red;">Veuillez sélectionner un participant pour voter.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p style="color: red;">Le vote n'a pas encore commencé. Veuillez attendre que le Scrum Master démarre le
+                vote.</p>
+            {% endif %}
+        </section>
+
+
+        <!-- informer i l'équipe est au complet -->
+        {% if equipe_complete %}
+        <div class="alert alert-success">
+            L'équipe est au complet ! Vous pouvez commencer le vote.
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            En attente d'autres participants pour compléter l'équipe...
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Partie droite : Fonctionnalité et détails -->
+    <div class="vote-droite">
+
+        <div class="fonction-grille-droite">
+            <!-- Product Owner -->
+            {% for participant in participants %}
+
+            {% if participant.pseudo == "po" %}
+            <div class="avatar-item-droite">
+                <form action="{{ url_for('set_pseudo_actif') }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="pseudo" value="{{ participant.pseudo }}">
+                    <button type="submit" class="avatar-button"  {% if pseudo_actif==participant.pseudo
+                        %}style="border: 2px solid green;" {% endif %}>
+                        <img src="{{ participant.avatar }}" alt="Avatar de {{ participant.pseudo }}">
+                        <p> {{ participant.pseudo}}</p>
+                    </button>
+                </form>
+                <!--<p class="avatar-titre-droite">Product Owner {{participant.pseudo}}</p>                                
+                    <img src="{{ participant.avatar }}" alt="Avatar de {{ pseudo }}" >
+                    <p class="avatar-nom-droite">{{ participant.pseudo }} ({{ participant.fonction_participant }})</p> -->
+            </div>
+            {% endif %}
+        </div>
+        <div class="fonction-grille-droite">
+
+            <!-- Scrum Master -->
+            {% if participant.pseudo == 'sm' %}
+            <div class="avatar-item-droite">
+                <form action="{{ url_for('set_pseudo_actif') }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="pseudo" value="{{ participant.pseudo }}">
+                    <button type="submit" class="avatar-button"  {% if pseudo_actif==participant.pseudo
+                        %}style="border: 2px solid green;" {% endif %}>
+                        <img src="{{ participant.avatar }}" alt="Avatar de {{ participant.pseudo }}">
+                        <p> {{ participant.pseudo }}</p>
+                    </button>
+                </form>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+        <p>Voici les détails de la fonctionnalité sélectionnée :</p>
+
+        {% if fonctionnalite %}
+        <div class="po-option-item">
+            <div style="text-align: left;">
+                <p><strong>Nom :</strong> {{ fonctionnalite.nom }}</p>
+                <p><strong>Statut :</strong> {{ fonctionnalite.statut }}</p>
+                <p><strong>Mode de vote :</strong> {{ fonctionnalite.mode_de_vote }}</p>
+            </div>
+            <!-- Bouton pour ouvrir la modale -->
+            <a href="#demo" class="po-button">Détails</a>
+            <div id="demo" class="modal">
+                <div class="modal-content">
+                    <a href="#" class="close">&times;</a>
+                    <h1>Afficher les détails</h1>
+                    <p><strong>Nom :</strong> {{ fonctionnalite.nom }}</p>
+                    <p><strong>Description :</strong> {{ fonctionnalite.description }}</p>
+                    <p><strong>Priorité :</strong> {{ fonctionnalite.priorite }}</p>
+                    <p><strong>Statut :</strong> {{ fonctionnalite.statut }}</p>
+                    <p><strong>Mode de vote :</strong> {{ fonctionnalite.mode_vote }}</p>
+                    <p><strong>Difficulté :</strong> {{ fonctionnalite.difficulte }}</p>
+                    <p>Bienvenue sur la fenêtre modale !</p>
+                </div>
+            </div>
+            {% else %}
+            <p>Aucune fonctionnalité n'est actuellement disponible dans le backlog.</p>
+            {% endif %}
+
+            <!-- Options pour le Product Owner -->
+            {% if pseudo_actif == "po" %}
+            <div class="po-options mt-4">
+                <h3>Options PO</h3>
+            </div>
+            <ul class="po-option-list">
+                <li class="po-option-item">
+                    <a href="{{ url_for('afficher_ajout_fonctionnalite') }}" class="po-button">Ajouter une
+                        fonctionnalité</a>
+                </li>
+                <li class="po-option-item">
+                    <a href="{{ url_for('backlog') }}" class="po-button">Modifier le backlog
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+
+    </div>
+    <!-- Modale pour les détails de la fonctionnalité -->
+    <div id="featureModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="featureTitle">Détails de la fonctionnalité</h3>
+            <p id="featureDescription">Description de la fonctionnalité...</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

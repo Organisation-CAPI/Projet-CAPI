@@ -1,0 +1,346 @@
+.vote-container {
+    display: flex; /* Active le mode Flexbox */
+    gap: 20px; /* Ajoute de l'espace entre les colonnes */
+    width: 100%; /* Étend à toute la largeur disponible */
+    max-width: 1200px; /* Limite la largeur maximale */
+    margin: 0 auto; /* Centre horizontalement */
+}
+
+.vote-left {
+    flex: 3; /* Donne 75% de l'espace total */
+    
+    height: auto; /* S'adapte au contenu */
+}
+
+.vote-right {
+    flex: 1; /* Donne 25% de l'espace total */
+   
+    height: auto; /* S'adapte au contenu */
+}
+
+/* Grille des participants */
+.participant-grid {
+    display: flex; /* Active le mode flexbox */
+    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+    gap: 20px; /* Espace entre les éléments */
+    justify-content: center; /* Centre les avatars horizontalement */
+}
+
+/* Grille pour les rôles PO et SM */
+.role-grid {
+    display: flex; /* Active Flexbox */
+    gap: 20px; /* Espace entre les rôles */
+    justify-content: center; /* Centre les éléments horizontalement */
+    margin: 20px 0; /* Espacement vertical autour de la grille */
+}
+
+.participant {
+    display: flex;
+    flex-direction: column; /* Avatars au-dessus du nom */
+    align-items: center; /* Centre les éléments horizontalement */
+    text-align: center; /* Centre le texte */
+    padding: 10px;
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+    background-color: #f9f9f9;
+    width: 100px; /* Largeur uniforme des participants */
+}
+
+.avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Rendu circulaire */
+    background-color: #ddd; /* Couleur grise par défaut */
+    margin-bottom: 10px;
+    object-fit: cover; /* Les images sont ajustées sans déformation */
+}
+
+.special-role {
+    margin: 20px 0;
+}
+
+.participant img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.participant[data-role="Product Owner"] {
+    border: 2px solid #007bff; /* Bleu pour PO */
+}
+
+.participant[data-role="Scrum Master"] {
+    border: 2px solid #28a745; /* Vert pour SM */
+}
+
+.participant[data-role="Participant"] {
+    border: 2px solid #ffc107; /* Jaune pour Participants */
+}
+
+.divider {
+    margin: 20px 0; /* Espace vertical autour de la ligne */
+    border: 0; /* Supprime la bordure par défaut */
+    height: 1px; /* Épaisseur de la ligne */
+    background-color: #e0e0e0; /* Couleur grise légère */
+}
+
+.vote-cards {
+    display: flex; /* Flexbox pour aligner les cartes */
+    gap: 10px; /* Espace entre les cartes */
+    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+    justify-content: center; /* Centre les cartes dans le conteneur */
+    margin-top: 10px; /* Espace supérieur */
+}
+
+.vote-card {
+    display: inline-block; /* Carte en mode bloc aligné */
+    width: 60px; /* Largeur fixe */
+    height: 80px; /* Hauteur fixe */
+    background-color: #007bff; /* Couleur de fond bleue */
+    color: white; /* Texte blanc */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille du texte */
+    font-weight: bold; /* Texte en gras */
+    text-align: center; /* Centre le texte horizontalement */
+    line-height: 80px; /* Centre verticalement en fonction de la hauteur */
+    cursor: pointer; /* Pointeur au survol */
+    transition: transform 0.2s, background-color 0.2s; /* Animation sur le survol */
+}
+
+.vote-card:hover {
+    background-color: #0056b3; /* Couleur plus sombre au survol */
+    transform: scale(1.1); /* Légèrement agrandi */
+}
+
+/* styles pour la page backlog.html*/
+/* Style général de la table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+    background-color: #f9f9f9;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.table th {
+    background-color: #333;
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Boutons */
+.btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Style de la section des options PO */
+.po-options {
+    margin-top: 20px;
+}
+
+.po-options h3 {
+    font-size: 1.2em;
+    text-align: center;
+    color: #343a40;
+    font-weight: bold;
+}
+
+/* Liste et éléments pour les options PO */
+.po-option-list {
+    list-style: none;
+    padding: 0;
+}
+
+.po-option-item {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.po-button {
+    display: block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.po-button:hover {
+    color: white;
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+/* Formulaire page modification fonctionnalités */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Groupes de champs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Modale pour les détails de la fonctionnalité */
+.modal {
+    display: none; /* Masquer par défaut */
+    position: fixed;
+    z-index: 1000; /* Position derrière la modale */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Masque semi-transparent */
+}
+
+.modal:target {
+    display: block;
+}
+
+.modal-content {
+    background-color: white; /* Fond blanc */
+    color: black; /* Texte noir */
+    position: fixed; /* Position fixe */
+    top: 50%; /* Centré verticalement */
+    left: 50%; /* Centré horizontalement */
+    transform: translate(-50%, -50%); /* Ajuste parfaitement le centrage */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre */
+    width: 400px; /* Largeur fixe */
+    max-width: 90%; /* Adapté aux petits écrans */
+    z-index: 1001; /* S'assurer qu'elle reste au-dessus */
+   
+}
+
+.modal-content h3 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: #555555;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.modal-content .close:hover {
+    color: #000;
+}
+
+/* flash*/
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: white;
+    background-color: green;
+}
+
+.alert-danger {
+    color: white;
+    background-color: red;
+}
+
+.alert-warning {
+    color: black;
+    background-color: yellow;
+}
+
+.alert-info {
+    color: white;
+    background-color: blue;
+}
+

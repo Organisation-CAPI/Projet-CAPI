@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+    <h1>Ajouter une fonctionnalité</h1>
+
+    <form action="{{ url_for('ajouter_fonctionnalite') }}" method="post">
+        <!-- Nom de la fonctionnalité -->
+        <div class="form-group">
+            <label for="nom">Nom de la fonctionnalité :</label>
+            <input type="text" class="form-control" id="nom" name="nom" value="{{ form_data.get('nom', '') }}" required>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea class="form-control" id="description" name="description">{{ form_data.get('description', '') }}</textarea>
+        </div>
+
+        <!-- Priorité -->
+        <div class="form-group">
+            <label for="priorite">Priorité :</label>
+            <input type="number" class="form-control" id="priorite" name="priorite" value="{{ form_data.get('priorite', '') }}" required>
+            {% if errors and errors.get('priorite') %}
+            <span class="text-danger">{{ errors['priorite'] }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Difficulté -->
+        <div class="form-group">
+            <label for="difficulte">Difficulté :</label>
+            <input type="number" class="form-control" id="difficulte" name="difficulte" value="{{ form_data.get('difficulte', '') }}" required>
+            {% if errors and errors.get('difficulte') %}
+            <span class="text-danger">{{ errors['difficulte'] }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Liste des participants ajoutés -->
+        <div class="form-group">
+            <label>Participants ajoutés :</label>
+            {% if participants_temp %}
+            <ul>
+                {% for participant in participants_temp %}
+                    <li>{{ participant }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Aucun participant ajouté.</p>
+            {% endif %}
+        </div>
+
+        <!-- Ajouter un participant -->
+        <div class="form-group">
+            <label for="participant_pseudo">Ajouter un participant :</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="participant_pseudo" name="participant_pseudo" placeholder="Entrez le pseudo du participant">
+                <div class="input-group-append">
+                    <button type="submit" formaction="{{ url_for('ajouter_participant_route') }}" class="btn btn-success">Ajouter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton pour enregistrer la fonctionnalité -->
+        <button type="submit" class="btn btn-primary">Enregistrer la fonctionnalité</button>
+    </form>
+
+    <!-- Bouton Retour -->
+    <div class="text-center" style="margin-top: 20px;">
+        <a href="{{ url_for('salle_de_vote') }}" class="btn btn-primary">Retour</a>
+    </div>
+  
+{% endblock %}
