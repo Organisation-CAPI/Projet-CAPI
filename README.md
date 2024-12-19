@@ -9,9 +9,11 @@ Activation et lancement des protocoles de vote : Le SM initie les séances de vo
 Validation ou invalidation des votes : Il examine les résultats des votes et décide de leur validité.
 Gestion des désaccords : En cas de divergence ou d'incohérence, le SM a la capacité de trancher ou de relancer un vote pour une fonctionnalité donnée.
 Coordination des séances : Le SM assure que la réunion se déroule de manière fluide et structurée.
+
 2. Processus de vote dans la Salle de vote
 Une fois une séance de vote lancée, les utilisateurs peuvent participer au vote pour chaque fonctionnalité depuis la Salle de vote.
 Si un scrutin nécessite d’être repris (par exemple, en cas de désaccord), le SM peut relancer le processus pour la fonctionnalité concernée.
+
 3. Réunions complètes et validées
 Grâce à l’ajout du rôle de Scrum Master et des nouvelles fonctionnalités associées, il est désormais possible de :
 
